@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
 
     public void PlayButtonHandler() { 
         gm.StartGame();
+        StartUI.SetActive(false); 
     }
 
     private void OnGUI() {
