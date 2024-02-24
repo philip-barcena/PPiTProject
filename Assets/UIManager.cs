@@ -7,10 +7,15 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI scoreUI;
 
+    [SerializeField] private GameObject StartUI;
     GameManager gm;
 
     private void Start(){
         gm = GameManager.Instance;
+    }
+
+    public void PlayButtonHandler() { 
+        gm.StartGame();
     }
 
     private void OnGUI() {
