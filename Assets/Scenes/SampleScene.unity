@@ -719,7 +719,7 @@ GameObject:
   m_Component:
   - component: {fileID: 538448456}
   m_Layer: 0
-  m_Name: ObstacleParent
+  m_Name: obstacleParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1054,6 +1054,7 @@ MonoBehaviour:
   - {fileID: 5435005539146462114, guid: 638817694d161a243b8d46bca06805e7, type: 3}
   - {fileID: 4583567847155265840, guid: 5ec9062e3765ff140a8efbe3f3ce54b2, type: 3}
   - {fileID: 6340219778850612612, guid: 6a4a791c4facca749ab30b2e8afa3045, type: 3}
+  obstacleParent: {fileID: 538448456}
   obstacleSpawnTimer: 3
   obstacleVelocity: 5
 --- !u!4 &829589364
