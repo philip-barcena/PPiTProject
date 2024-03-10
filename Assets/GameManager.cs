@@ -10,13 +10,16 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance;
 
-    private void Awake() {
+    private void Awake()
+    {
         if (Instance == null) Instance = this;
     }
 
     #endregion
 
     public float currentScore = 0f;
+
+    public Data data;
 
     public bool isPlaying = false;
 
@@ -26,35 +29,64 @@ public class GameManager : MonoBehaviour
 
     private ScoresDB scoresDB;
 
-     private void Start() {
-         scoresDB = GetComponent<ScoresDB>();
-     }
+    public SpriteAnimation spriteAnimation;
 
-    private void Update() {
-        if (isPlaying) {
+
+    private void Start()
+    {
+        scoresDB = GetComponent<ScoresDB>();
+
+        data = new Data();
+
+    }
+
+    private void Update()
+    {
+        if (isPlaying)
+        {
             currentScore += Time.deltaTime;
         }
-      
+
     }
 
-    public void StartGame() { 
+    public void StartGame()
+    {
         onPlay.Invoke();
         isPlaying = true;
-    }
-
-    public void GameOver() {
-        onGameOver.Invoke();
+        // Reset the current score for the next game
         currentScore = 0;
-        isPlaying = false;
+        spriteAnimation.StartAnimation();
 
-        int score = Mathf.RoundToInt(currentScore);
-        scoresDB.InsertScore(score);
+
     }
-    public string TidyScore () {
+
+    public void GameOver()
+    {
+        
+
+        if (data.highscore < currentScore)
+        {
+            data.highscore = currentScore;
+        }
+
+        int finalScore = Mathf.RoundToInt(data.highscore);
+
+        // Insert the final score into the database
+        scoresDB.InsertScore(finalScore);
+        isPlaying = false;
+        onGameOver.Invoke();
+    }
+    public string TidyScore()
+    {
         return Mathf.RoundToInt(currentScore).ToString();
     }
 
-   public void RetrieveScore()
+    public string TidyHighScore()
+    {
+        return Mathf.RoundToInt(data.highscore).ToString();
+    }
+
+    public void RetrieveScore()
     {
         // Retrieve score from SQLite database
         int score = scoresDB.GetLatestScore();
