@@ -1,6 +1,9 @@
 using UnityEngine;
 using Mono.Data.Sqlite;
 using System.Data;
+using System.Collections.Generic;
+using System;
+    
 
 public class ScoresDB : MonoBehaviour
 {
@@ -70,5 +73,31 @@ public class ScoresDB : MonoBehaviour
         }
 
         return latestScore;
+    }
+      public List<int> GetHighestScores()
+    {
+        List<int> highestScores = new List<int>();
+
+        string query = "SELECT Score FROM Scores ORDER BY Score DESC LIMIT 5";
+
+        using (var connection = new SqliteConnection(connectionString))
+        {
+            connection.Open();
+
+            using (var command = new SqliteCommand(query, connection))
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        highestScores.Add(reader.GetInt32(0));
+                    }
+                }
+            }
+
+            connection.Close();
+        }
+
+        return highestScores;
     }
 }
